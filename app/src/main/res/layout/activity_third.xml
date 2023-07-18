@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/walpo"
     tools:context=".ThirdActivity">
     <ScrollView
         android:layout_above="@+id/optionsLl"
@@ -18,17 +19,37 @@
                 android:id="@+id/sourceLanguageET"
                 android:layout_width="match_parent"
                 android:hint="ENTER IN ENGLISH"
+                android:textColorHint="#EBBCF3"
                 android:minHeight="100dp"
                 android:gravity="start"
                 android:textSize="18sp"
+                android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/destinationLanguageTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="50dp"
+android:textColor="@color/black"
                 android:text=""
                 android:textSize="18sp"/>
+
+
+
+
+
+
+
+            <Button
+    android:id="@+id/buttonSpeak"
+    android:onClick="speak"
+    android:layout_width="208dp"
+    android:layout_height="48dp"
+   app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_gravity="center"
+    android:text="Speak Something..."/>
 
         </LinearLayout>
     </ScrollView>
@@ -44,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="English"
-            app:backgroundTint="#03A9F4"
+            app:backgroundTint="#65A2AA"
             app:cornerRadius="10dp" />
 <ImageView
     android:layout_width="wrap_content"
@@ -59,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Urdu"
-            app:backgroundTint="#00BCD4"
+            app:backgroundTint="#C38ECC"
             app:cornerRadius="10dp" />
 
     </LinearLayout>

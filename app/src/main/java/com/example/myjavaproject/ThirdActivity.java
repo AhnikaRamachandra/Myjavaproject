@@ -6,7 +6,11 @@ import static com.example.myjavaproject.R.id.sourceLanguageET;
 import static com.example.myjavaproject.R.layout;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,12 +39,14 @@ import java.util.Locale;
 
 public class ThirdActivity extends AppCompatActivity {
 private EditText sourceLanguageEt;
+    private TextToSpeech textToSpeech;
 private MaterialButton destinationLanguageChooseBtn;
 private MaterialButton sourceLanguageChooseBtn;
 private TextView destinationLanguageTV;
 private MaterialButton translateBtn;
 private TranslatorOptions translatorOptions;
 private Translator translator;
+
 private ProgressDialog progressDialog;
 
 private ArrayList<ModelLanguage> languageArrayList;
@@ -54,6 +61,7 @@ private String sourceLanguageCode="en";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_third);
+
 
 
   sourceLanguageChooseBtn=findViewById(destinationLanguagechosebtn);
@@ -85,8 +93,10 @@ destinationLanguageChoose();
 validateData();
        }
    });
-   
+
+
     }
+
 private String sourceLanguageText="";
     private void validateData() {
         sourceLanguageText=sourceLanguageEt.getText().toString().trim();
@@ -208,15 +218,21 @@ ModelLanguage modelLanguage=new ModelLanguage(languageCode,languageTitle);
  languageArrayList.add(modelLanguage);
    }
     }
-}
-/*
- *chose source and destination language from the list
- * enter text to translate
- * translate the text
 
- * adding required libraries(build gradle)
- * adding permission(android manifest.xml)
- * design
- * source and destination language selector
- * start translation
- * */
+    public void speak(View view) {
+        Intent intent=new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+   intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"start speaking");
+startActivityForResult(intent,100);
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @
+            Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 100 && resultCode == RESULT_OK){
+            sourceLanguageEt.setText(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
+        }
+    }
+}
